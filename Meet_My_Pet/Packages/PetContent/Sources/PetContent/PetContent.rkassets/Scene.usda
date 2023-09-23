@@ -1,0 +1,76 @@
+#usda 1.0
+(
+    defaultPrim = "Root"
+    metersPerUnit = 1
+    upAxis = "Y"
+)
+
+def Xform "Root"
+{
+    float3 xformOp:scale = (0.4, 0.4, 0.4)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+    def "Love_Birds_Parrot" (
+        active = true
+        prepend apiSchemas = ["MaterialBindingAPI"]
+        references = [
+            @Love_Birds_Parrot.usdz@,
+            @Love_Birds_Parrot.usdz@</scene/Materials/lovebird>
+        ]
+    )
+    {
+        rel material:binding = </Root/lovebird> (
+            bindMaterialAs = "weakerThanDescendants"
+        )
+        float3 xformOp:scale = (0.4, 0.4, 0.4)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "Materials"
+        {
+            over "lovebird"
+            {
+                token outputs:mtlx:surface
+                token outputs:realitykit:vertex
+            }
+        }
+    }
+
+    def Material "lovebird" (
+        prepend references = </Root/Love_Birds_Parrot/Materials/lovebird>
+    )
+    {
+        token outputs:surface.connect = </Root/lovebird/pbr_shader.outputs:surface>
+
+        def Shader "pbr_shader"
+        {
+            uniform token info:id = "UsdPreviewSurface"
+            color3f inputs:diffuseColor.connect = </Root/lovebird/tex_base.outputs:rgb>
+            color3f inputs:emissiveColor = (0, 0, 0)
+            float inputs:metallic = 0
+            normal3f inputs:normal = (0, 0, 1)
+            float inputs:occlusion = 1
+            float inputs:roughness = 1
+            token outputs:surface
+        }
+
+        def Shader "uvset0"
+        {
+            uniform token info:id = "UsdPrimvarReader_float2"
+            token inputs:varname = "st0"
+            float2 outputs:result
+        }
+
+        def Shader "tex_base"
+        {
+            uniform token info:id = "UsdUVTexture"
+            float4 inputs:fallback = (1, 1, 1, 1)
+            asset inputs:file
+            float2 inputs:st.connect = </Root/lovebird/uvset0.outputs:result>
+            token inputs:wrapS = "repeat"
+            token inputs:wrapT = "repeat"
+            float outputs:a
+            float3 outputs:rgb
+        }
+    }
+}
+
