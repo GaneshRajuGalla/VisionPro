@@ -12,3 +12,6 @@ https://github.com/GaneshRajuGalla/VisionPro/assets/61533653/b44e8066-5b4d-4754-
 
 ## Meet My Pet
 ![Simulator Screen Recording - Apple Vision Pro - 2023-09-23 at 19 27 04](https://github.com/GaneshRajuGalla/VisionPro/assets/61533653/f13c3a56-1147-4a36-b103-571dc53ddc22)
+
+## ManekiWindow
+![Simulator Screenshot - Apple Vision Pro - 2023-09-25 at 04 28 04](https://github.com/GaneshRajuGalla/VisionPro/assets/61533653/27e13a8e-d2c2-4db7-b444-efa974c3ff26)
